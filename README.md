@@ -13,6 +13,8 @@ For my project, I use a hybrid data storage architecture combining Postgres as t
 
 2. Upstash Redis caches frequently accessed data such as homepage posts, sessions, or API responses to reduce database load and improve latency.
 
+3. Cloudinary handles image storage and delivery, serving images through a global CDN and enabling on-the-fly optimizations like resizing and compression.
+
 </br>
 
 # Why this combination?
@@ -62,6 +64,23 @@ The data retrieval follows a cache-aside strategy:
 2. Apply proper authentication and authorization (e.g., JWT tokens with Supabase).
 
 3. Validate and sanitize inputs to prevent injection attacks.
+
+</br>
+
+# Cloudinary Integration for Image Optimization
+
+To improve performance and user experience, Nexora now integrates **[Cloudinary](https://cloudinary.com/)** for image storage and delivery.  
+Previously, images were stored as binary data in PostgreSQL, which increased database size and slowed down load times. Now, images are uploaded to Cloudinary and referenced in the database by their URLs.
+
+1. **Faster Loading:** Images are served via Cloudinary’s global CDN, reducing latency and improving page load speed.
+
+2. **Reduced Database Size:** Storing only URLs in PostgreSQL significantly lowers database storage requirements.
+
+3. **Dynamic Image Processing:** On-the-fly transformations such as resizing, cropping, and compression without modifying the original file.
+
+4. **Better Caching:** Images are cached closer to users, improving repeat visit load times.
+
+5. **Scalability:** Offloading image hosting removes storage limits from the application’s infrastructure.
 
 </br>
 
